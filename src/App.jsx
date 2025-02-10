@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { marked } from "marked";
 import { MdCloseFullscreen, MdOpenInFull } from "react-icons/md";
-import "./App.css";
 
 const defaultMarkdown = `# Welcome to my React Markdown Previewer!
 
@@ -64,49 +63,68 @@ function App() {
   };
 
   return (
-    <>
-      <div>
-        <h1 style={{ textAlign: "center", color: "#fff"}}>Markdown Previewer</h1>
-        <div className="textarea-container">
-          <div className={`${expandedEditor ? "expanded" : expandedPreviewer ? "hidden" : "editor-container"}`}>
-            <div className="toolbar">
-              <span>Editor</span>
-              <button className="toggle-button" onClick={toggleEditor}>
-                {expandedEditor ? (
-                  <MdCloseFullscreen className="toggle-icon" />
-                ) : (
-                  <MdOpenInFull className="toggle-icon" />
-                )}
-              </button>
-            </div>
-            <textarea
-              name="editor"
-              id="editor"
-              value={markdownText}
-              onChange={handleChange}
-            ></textarea>
+    <div className="w-full bg-[#578c8c] p-2">
+      <h1 className="text-center text-white text-4xl font-montserrat font-bold">
+        Markdown Previewer
+      </h1>
+      <div className="flex flex-col items-center mt-10 w-[80%] m-auto">
+        <div
+          className={`${
+            expandedEditor
+              ? "w-full h-screen"
+              : expandedPreviewer
+              ? "hidden"
+              : "w-[90%] h-[50vh] mb-3.5"
+          }`}
+        >
+          <div className="flex items-center justify-between w-full h-5 p-1.5 bg-[#4c4a4a] font-bold text-[#a5eed3]">
+            <span>Editor</span>
+            <button
+              className="flex items-center bg-none border-none outline-none shadow-none cursor-pointer"
+              onClick={toggleEditor}
+            >
+              {expandedEditor ? (
+                <MdCloseFullscreen className="text-lg font-bold text-[#a5eed3]" />
+              ) : (
+                <MdOpenInFull className="text-lg font-bold text-[#a5eed3]" />
+              )}
+            </button>
           </div>
-          <div className={`${expandedPreviewer ? "expanded" : expandedEditor ? "hidden" : "previewer-container"}`}>
-            <div className="toolbar">
-              <span>Previewer</span>
-              <button className="toggle-button" onClick={togglePreviewer}>
-                {expandedPreviewer ? (
-                  <MdCloseFullscreen className="toggle-icon" />
-                ) : (
-                  <MdOpenInFull className="toggle-icon" />
-                )}
-              </button>
-            </div>
-            <div
-              id="preview"
-              dangerouslySetInnerHTML={{
-                __html: marked(markdownText, { breaks: true }),
-              }}
-            ></div>
+          <textarea
+            name="editor"
+            className="w-full h-[80%] text-lg bg-white resize-none p-1.5 border-none shadow-2xl text-[#1c1b1b] overflow-auto"
+            value={markdownText}
+            onChange={handleChange}
+          ></textarea>
+        </div>
+        <div
+          className={`${
+            expandedPreviewer
+              ? "w-full h-screen"
+              : expandedEditor
+              ? "hidden"
+              : "w-[100%] h-[100vh] mb-3.5"
+          }`}
+        >
+          <div className="flex items-center justify-between w-full h-5 p-1.5 bg-[#4c4a4a] font-bold text-[#a5eed3]">
+            <span>Previewer</span>
+            <button className="flex items-center bg-none border-none outline-none shadow-none cursor-pointer" onClick={togglePreviewer}>
+              {expandedPreviewer ? (
+                <MdCloseFullscreen className="text-lg font-bold text-[#a5eed3]" />
+              ) : (
+                <MdOpenInFull className="text-lg font-bold text-[#a5eed3]" />
+              )}
+            </button>
           </div>
+          <div
+          className="w-full h-[80%] text-lg bg-white resize-none p-1.5 border-none shadow-2xl text-[#1c1b1b] overflow-auto"
+            dangerouslySetInnerHTML={{
+              __html: marked(markdownText, { breaks: true }),
+            }}
+          ></div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
